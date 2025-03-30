@@ -1,22 +1,23 @@
-import requests
-import os
+name: Executar Script Python
 
-bot_token = os.getenv("BOT_TOKEN")  # Pega o token do GitHub Secrets
+on:
+  workflow_dispatch:  # Permite execução manual
 
-if not bot_token:
-    print("ERRO: BOT_TOKEN não foi encontrado. Verifique os Secrets no GitHub.")
-    exit(1)
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
 
-chat_ids = ["207223980"]
-mensagem = "SUPORTE TÉCNICO: Seja bem vindo ao AquaMonitor, monitoramento inteligente para condomínios eficientes."
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v3
 
-print(f"Token lido: {bot_token[:10]}**********")  # Exibe só parte do token por segurança
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Substitua pelo Python necessário
 
-for chat_id in chat_ids:
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={mensagem}"
-    response = requests.get(url)
+      - name: Instalar dependências
+        run: pip install -r requirements.txt || echo "Nenhuma dependência encontrada"
 
-    if response.status_code == 200:
-        print(f"✅ Mensagem enviada com sucesso para {chat_id}")
-    else:
-        print(f"❌ Erro ao enviar mensagem para {chat_id}: {response.status_code} - {response.text}")
+      - name: Executar o script
+        run: python enviar_mensagem.py
