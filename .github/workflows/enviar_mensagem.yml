@@ -1,23 +1,31 @@
 name: Enviar Mensagem Manualmente
 
 on:
-  workflow_dispatch:  # Permite que você execute manualmente pelo GitHub Actions
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Mensagem a ser enviada'
+        required: true
+        default: 'Olá, esta é uma mensagem automática do GitHub Actions!'
 
 jobs:
   send-message:
-    runs-on: ubuntu-latest  # Define o sistema operacional do servidor GitHub
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clonar o repositório
-        uses: actions/checkout@v3  # Baixa o código do repositório
+        uses: actions/checkout@v3
 
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Ajuste para a versão correta do Python
+          python-version: '3.x'
 
       - name: Instalar dependências
-        run: pip install -r requirements.txt || echo "Nenhuma dependência encontrada"
+        run: pip install requests
 
       - name: Executar o script de envio de mensagem
-        run: python enviar_mensagem.py
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python enviar_mensagem.py "$BOT_TOKEN" "$CHAT_ID" "${{ github.event.inputs.message }}"
