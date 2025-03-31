@@ -14,9 +14,9 @@ jobs:
         run: pip install requests
 
       - name: Verificar variável de ambiente
-        run: echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}"  # Testa se a variável existe (não imprime o valor)
+        run: echo "BOT_TOKEN=${{ secrets.DUETTO }}"  # Testa se a variável existe (não imprime o valor)
 
       - name: Executar o script
         env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}  # Passa o token como variável de ambiente
+          BOT_TOKEN: ${{ secrets.DUETTO }}  # Passa o token como variável de ambiente
         run: python enviar_mensagem.py
