@@ -1,0 +1,23 @@
+name: Enviar Mensagem Manualmente
+
+on:
+  workflow_dispatch:  # Permite que você execute manualmente pelo GitHub Actions
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest  # Define o sistema operacional do servidor GitHub
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3  # Baixa o código do repositório
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Ajuste para a versão correta do Python
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt || echo "Nenhuma dependência encontrada"
+
+      - name: Executar o script de envio de mensagem
+        run: python enviar_mensagem.py
