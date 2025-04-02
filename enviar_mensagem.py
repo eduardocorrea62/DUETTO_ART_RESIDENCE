@@ -8,7 +8,7 @@ if not bot_token:
     exit(1)
 
 chat_ids = ["207223980", "975571557", "7607162956"]
-mensagem = "SUPORTE TÉCNICO: Seja bem vindo ao AquaMonitor, monitoramento inteligente para condomínios eficientes."
+mensagem = "INFORMAÇÃO DO SUPORTE TÉCNICO: Os alertas de nível baixo dos reservatórios A e B estão configurados para 30%. Os níveis das cisternas das torres A e B estão com os alertas configurados para dispararem em 80%, por possível problema na bóia ou na bomba do reservatório."
 
 print(f"Token lido: {bot_token[:10]}**********")  # Exibe só parte do token por segurança
 
